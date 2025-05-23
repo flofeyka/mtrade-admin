@@ -8,6 +8,7 @@ import Analytics from "./pages/dashboard/analytics/Analytics";
 import Clients from "./pages/dashboard/clients/Clients";
 import Visitors from "./pages/dashboard/visitors/Visitors";
 import Partners from "./pages/dashboard/partners/Partners";
+import Reminders from "./pages/dashboard/reminders/Reminders";
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 						<Route path="/dashboard/clients" element={<Clients />} />
 						<Route path="/dashboard/visitors" element={<Visitors />} />
 						<Route path="/dashboard/partners" element={<Partners />} />
+						<Route path="/dashboard/reminders" element={<Reminders />} />
 					</Route>
 				</Routes>
 			</div>

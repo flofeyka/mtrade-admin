@@ -54,10 +54,13 @@ export default function DashboardHeader() {
 					🤝 <br />
 					Партнеры
 				</Link>
-				<div className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3">
+				<Link
+					to="/dashboard/reminders"
+					className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3"
+				>
 					🔔 <br />
 					Напоминания
-				</div>
+				</Link>
 			</span>
 
 			<span className="flex flex-col gap-3">
