@@ -23,22 +23,37 @@ export default function DashboardHeader() {
 				>
 					💳 Оплаты
 				</Link>
-				<div className="border-r-2 w-[135px] text-center text-center cursor-pointer border-[#00000033] p-3">
+				<Link
+					to="/dashboard/not-completed-payments"
+					className="border-r-2 w-[135px] text-center text-center cursor-pointer border-[#00000033] p-3"
+				>
 					⚠️ Незав. <br /> оплаты
-				</div>
-				<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
+				</Link>
+				<Link
+					to="/dashboard/analytics"
+					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
+				>
 					📈 Аналитика
-				</div>
-				<div className="border-r-2  w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
+				</Link>
+				<Link
+					to="/dashboard/clients"
+					className="border-r-2  w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
+				>
 					👤 Клиенты
-				</div>
-				<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3 text-center">
+				</Link>
+				<Link
+					to="/dashboard/visitors"
+					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3 text-center"
+				>
 					👥 <br /> Посетители
-				</div>
-				<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
+				</Link>
+				<Link
+					to="/dashboard/partners"
+					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
+				>
 					🤝 <br />
 					Партнеры
-				</div>
+				</Link>
 				<div className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3">
 					🔔 <br />
 					Напоминания
