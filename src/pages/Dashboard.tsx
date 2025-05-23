@@ -81,16 +81,18 @@ export default function Dashboard() {
 						👥 <br /> Посетители
 					</div>
 					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
+						🤝 <br />
 						Партнеры
 					</div>
-					<div className=" cursor-pointer w-[140px] text-center rounded-r-xl p-4">
+					<div className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3">
+						🔔 <br />
 						Напоминания
 					</div>
 				</span>
 
 				<span className="flex flex-col gap-3">
-					<Button className="p-3 w-[220px]">👤 administrator</Button>
-					<Button className="p-3 w-[220px]">🔔 Уведомления (2)</Button>
+					<Button className="p-3 w-[180px]">👤 administrator</Button>
+					<Button className="p-3 w-[180px]">🔔 Уведомления (2)</Button>
 				</span>
 			</header>
 
