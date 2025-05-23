@@ -73,7 +73,7 @@ export default function Payments() {
 							<span
 								key={index}
 								className={`w-[260px] break-all text-center py-6.5 ${
-									index < 8 ? "border-r-2 border-[#00000033]" : ""
+									index < 7 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
 								{header}
