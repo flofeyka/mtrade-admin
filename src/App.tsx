@@ -1,6 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
+import DashboardLayout from "./pages/dashboard/layout";
+import Statistics from "./pages/dashboard/stats/Statistics";
+import Requests from "./pages/dashboard/requests/Requests";
+import Payments from "./pages/dashboard/payments/Payments";
 
 function App() {
 	return (
@@ -9,7 +12,15 @@ function App() {
 				<Routes>
 					<Route path="*" element={<Navigate to="/sign-in" />} />
 					<Route path="/sign-in" element={<Auth />} />
-					<Route path="/dashboard" element={<Dashboard />} />
+					<Route element={<DashboardLayout />}>
+						<Route
+							path="/dashboard/*"
+							element={<Navigate to="/dashboard/statistics" />}
+						/>
+						<Route path="/dashboard/statistics" element={<Statistics />} />
+						<Route path="/dashboard/requests" element={<Requests />} />
+						<Route path="/dashboard/payments" element={<Payments />} />
+					</Route>
 				</Routes>
 			</div>
 		</BrowserRouter>

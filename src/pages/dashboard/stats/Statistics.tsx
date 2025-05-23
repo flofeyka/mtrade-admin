@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import Button from "../components/Button";
+import React from "react";
+import Button from "../../../components/Button";
+import DashboardPeriod from "../../../components/shared/DashboardPeriod";
 
 interface Notification {
 	date: Date;
@@ -12,12 +13,12 @@ interface TopButton {
 	clickCount: number | undefined;
 }
 
-export default function Dashboard() {
-	const [topButtons, setTopButtons] = useState<TopButton[]>([]);
+export default function Statistics() {
+	const [topButtons, setTopButtons] = React.useState<TopButton[]>([]);
 
-	const [notifications, setNotifications] = useState<Notification[]>([]);
+	const [notifications, setNotifications] = React.useState<Notification[]>([]);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		setNotifications([
 			{
 				date: new Date(),
@@ -56,64 +57,9 @@ export default function Dashboard() {
 	}, []);
 
 	return (
-		<div className="min-h-screen h-full w-full p-10 bg-[#B3B3B380] flex flex-col gap-10">
-			<header className="flex gap-6 items-center justify-between">
-				<span className="bg-white flex relative rounded-xl border-[#0000008F] border-2">
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						📊 Дашборд
-					</div>
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						📥 Заявки
-					</div>
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						💳 Оплаты
-					</div>
-					<div className="border-r-2 w-[135px] text-center text-center cursor-pointer border-[#00000033] p-3">
-						⚠️ Незав. <br /> оплаты
-					</div>
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						📈 Аналитика
-					</div>
-					<div className="border-r-2  w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						👤 Клиенты
-					</div>
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3 text-center">
-						👥 <br /> Посетители
-					</div>
-					<div className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3">
-						🤝 <br />
-						Партнеры
-					</div>
-					<div className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3">
-						🔔 <br />
-						Напоминания
-					</div>
-				</span>
-
-				<span className="flex flex-col gap-3">
-					<Button className="p-3 w-[180px]">👤 administrator</Button>
-					<Button className="p-3 w-[180px]">🔔 Уведомления (2)</Button>
-				</span>
-			</header>
-
-			<main className="w-[85vw] flex flex-col self-center">
-				<header className="flex justify-center">
-					<div className="bg-[#FFFFFF] border-2 border-[#00000033] rounded-xl h-[60px] flex self-center items-center">
-						<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
-							Сегодня
-						</span>
-						<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
-							Вчера
-						</span>
-						<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
-							Неделя
-						</span>
-						<span className="flex items-center justify-center w-[180px] h-full">
-							Месяц
-						</span>
-					</div>
-				</header>
-
+		<div className="w-[85vw] flex flex-col self-center">
+			<DashboardPeriod />
+			<main>
 				<main className="mt-5">
 					<div className="flex justify-between">
 						<span className="flex flex-col items-center gap-7">
@@ -177,7 +123,7 @@ export default function Dashboard() {
 				</main>
 			</main>
 
-			<footer className="flex items-center flex-col w-[85vw] flex flex-col self-center">
+			<footer>
 				<Button className="w-[250px] my-5">Уведомления</Button>
 
 				<div className="w-full mt-10">
