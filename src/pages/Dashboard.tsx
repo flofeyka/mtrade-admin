@@ -1,42 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 
-export default function Dashboard() {
-	const [topButtons, setTopButtons] = useState([
-		{
-			id: 1,
-			button: "“Попробовать демо” Блок 1",
-			clickCount: 7,
-		},
-		{
-			id: 2,
-			button: "“Узнать больше” Блок 3",
-			clickCount: 7,
-		},
-		{
-			id: 3,
-			button: "",
-			clickCount: undefined,
-		},
-	]);
+interface Notification {
+	date: Date;
+	message: string;
+}
 
-	const [notifications, setNotifications] = useState([
-		{
-			date: new Date(),
-			message:
-				"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
-		},
-		{
-			date: new Date(),
-			message:
-				"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
-		},
-		{
-			date: new Date(),
-			message:
-				"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
-		},
-	]);
+interface TopButton {
+	id: number;
+	button: string;
+	clickCount: number | undefined;
+}
+
+export default function Dashboard() {
+	const [topButtons, setTopButtons] = useState<TopButton[]>([]);
+
+	const [notifications, setNotifications] = useState<Notification[]>([]);
+
+	useEffect(() => {
+		setNotifications([
+			{
+				date: new Date(),
+				message:
+					"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
+			},
+			{
+				date: new Date(),
+				message:
+					"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
+			},
+			{
+				date: new Date(),
+				message:
+					"У пользователя № 5098 через 14 дней заканчивается подписка. Оповестите его и убедитесь в намерениях о продлении.",
+			},
+		]);
+
+		setTopButtons([
+			{
+				id: 1,
+				button: "“Попробовать демо” Блок 1",
+				clickCount: 7,
+			},
+			{
+				id: 2,
+				button: "“Узнать больше” Блок 3",
+				clickCount: 7,
+			},
+			{
+				id: 3,
+				button: "",
+				clickCount: undefined,
+			},
+		]);
+	}, []);
 
 	return (
 		<div className="min-h-screen h-full w-full p-10 bg-[#B3B3B380] flex flex-col gap-10">
