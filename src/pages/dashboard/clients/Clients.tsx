@@ -59,7 +59,7 @@ export default function Clients() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex">
 						{[
 							"ID Клиента",
 							"ФИО",
@@ -72,7 +72,7 @@ export default function Clients() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
+								className={`min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-6.5 ${
 									index < 8 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
@@ -81,38 +81,35 @@ export default function Clients() {
 						))}
 					</div>
 					{clients.map((client) => (
-						<div
-							key={client.id}
-							className="flex border-b border-gray-200 text-sm"
-						>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+						<div key={client.id} className="flex text-sm">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.id}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.fullName}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.telegram}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.email}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.subscriptionType}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.subscriptionEnd}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 								{client.invoiceNumber}
 							</span>
-							<span className="w-[240px] text-center py-4">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] text-center py-4">
 								{client.partnerCode}
 							</span>
 						</div>
 					))}
 				</div>
-				<div className="flex justify-between text-3xl">
+				<div className="flex justify-between text-3xl max-[762px]:text-xl">
 					<span>
 						Отображается {clients.length} из {clients.length}
 					</span>

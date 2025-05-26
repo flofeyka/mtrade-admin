@@ -63,7 +63,7 @@ export default function Visitors() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex">
 						{[
 							"ID",
 							"Источник трафика",
@@ -77,8 +77,8 @@ export default function Visitors() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
-									index < 8 ? "border-r-2 border-[#00000033]" : ""
+								className={`min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-6.5 ${
+									index < 8 ? "border-r-2" : ""
 								}`}
 							>
 								{header}
@@ -86,41 +86,38 @@ export default function Visitors() {
 						))}
 					</div>
 					{visitors.map((entry) => (
-						<div
-							key={entry.id}
-							className="flex border-b border-gray-200 text-sm"
-						>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+						<div key={entry.id} className="flex text-sm">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.id}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.trafficSource}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.utmTags || "—"}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.country}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.device}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.browser}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.pagesViewed}
 							</span>
-							<span className="w-[240px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 								{entry.timeOnSite}
 							</span>
-							<span className="w-[240px] break-all text-center py-4">
+							<span className="min-w-[240px] border-b-2 border-[#00000033] break-all text-center py-4">
 								{entry.cookieFile}
 							</span>
 						</div>
 					))}
 				</div>
-				<div className="flex justify-between text-3xl">
+				<div className="flex justify-between text-3xl max-[762px]:text-xl">
 					<span>
 						Отображается {visitors.length} из {visitors.length}
 					</span>

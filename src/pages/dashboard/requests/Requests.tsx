@@ -74,7 +74,7 @@ export default function Requests() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex border-b-2 w-full border-[#00000033]">
 						{[
 							"ID заявки",
 							"Дата и время",
@@ -88,7 +88,7 @@ export default function Requests() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
+								className={`min-w-[260px] break-all text-center py-6.5 ${
 									index < 8 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
@@ -98,35 +98,37 @@ export default function Requests() {
 					</div>
 					{requests.map((req: RequestData) => (
 						<div key={req.id} className="flex border-b border-gray-200 text-sm">
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.id}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.datetime}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.fullName}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.phone}
 							</span>
-							<span className="w-[260px] break-all text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] break-all text-center py-4 border-r-2 border-[#00000033]">
 								{req.email}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.telegram}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.partnerCode}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
 								{req.source}
 							</span>
-							<span className="w-[260px] text-center py-4">{req.status}</span>
+							<span className="min-w-[260px] text-center py-4">
+								{req.status}
+							</span>
 						</div>
 					))}
 				</div>
-				<div className="flex justify-between text-3xl">
+				<div className="flex justify-between text-3xl max-sm:text-xl">
 					<span>
 						Отображается {requests.length} из {requests.length}
 					</span>
