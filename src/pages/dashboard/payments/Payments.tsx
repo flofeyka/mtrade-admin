@@ -59,7 +59,7 @@ export default function Payments() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex">
 						{[
 							"ID Оплаты",
 							"Дата и время",
@@ -72,8 +72,8 @@ export default function Payments() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
-									index < 7 ? "border-r-2 border-[#00000033]" : ""
+								className={`min-w-[260px] border-b-2 border-[#00000033] break-all text-center py-6.5 ${
+									index < 7 ? "border-r-2" : ""
 								}`}
 							>
 								{header}
@@ -82,34 +82,34 @@ export default function Payments() {
 					</div>
 					{payments.map((pay: PaymentData) => (
 						<div key={pay.id} className="flex border-b border-gray-200 text-sm">
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.id}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.datetime}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.fullName}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.email}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.source}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.product}
 							</span>
-							<span className="w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[260px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 								{pay.amount} ₽
 							</span>
-							<span className="w-[260px] text-center py-4">
+							<span className="min-w-[260px] text-center border-b-2 border-[#00000033] py-4">
 								{pay.promoCode || "—"}
 							</span>
 						</div>
 					))}
 				</div>
-				<div className="flex justify-between text-3xl">
+				<div className="flex justify-between text-3xl max-[762px]:text-xl">
 					<span>
 						Отображается {payments.length} из {payments.length}
 					</span>

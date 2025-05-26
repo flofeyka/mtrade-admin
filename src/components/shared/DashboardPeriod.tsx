@@ -9,32 +9,34 @@ interface Props {
 export default function DashboardPeriod({ search, setSearch }: Props) {
 	return (
 		<header
-			className={`flex ${
-				typeof search === "string" ? "justify-between" : "justify-center"
+			className={`flex max-sm:flex-col max-[762px]:gap-10 ${
+				typeof search === "string"
+					? "sm:justify-between max-sm:items-baseline"
+					: "justify-center"
 			} w-full mb-12`}
 		>
-			<div className="bg-[#FFFFFF] border-2 border-[#00000033] rounded-xl h-[60px] flex self-center items-center">
-				<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
+			<div className="bg-[#FFFFFF] max-[762px]:flex-wrap max-[762px]:w-full border-2 border-[#00000033] overflow-hidden rounded-xl min-[762px]-h-[60px] min-[762px]:flex self-center min-[762px]:items-center">
+				<span className="min-[762px]:border-r-2 max-[762px]:border-b-2 bg-[#FFFFFF] h-[60px] flex items-center justify-center w-[180px] max-[762px]:w-full border-[#00000033] ">
 					Сегодня
 				</span>
-				<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
+				<span className="min-[762px]:border-r-2 bg-[#FFFFFF] max-[762px]:border-b-2 h-[60px] flex items-center justify-center min-[762px]:w-[180px] max-[762px]-w-full border-[#00000033] ">
 					Вчера
 				</span>
-				<span className="border-r-2 flex items-center justify-center w-[180px] border-[#00000033] h-full">
+				<span className="min-[762px]:border-r-2 bg-[#FFFFFF] max-[762px]:border-b-2 h-[60px] flex items-center justify-center min-[762px]:w-[180px] border-[#00000033] ">
 					Неделя
 				</span>
-				<span className="flex items-center justify-center w-[180px] h-full">
+				<span className="flex items-center bg-[#FFFFFF] h-[60px] justify-center min-[762px]:w-[180px] max-[762px]:w-full rounded-b-xl">
 					Месяц
 				</span>
 			</div>
 
 			{typeof search === "string" && (
-				<span>
+				<span className="max-[762px]:w-full">
 					<Input
 						placeholder="Поиск"
 						onChange={(e) => setSearch?.(e.target.value)}
 						value={search}
-						className="w-[350px] pr-13"
+						className="min-[763px]:w-[350px] pr-13 max-[762px]:w-full"
 					/>
 					<span className="absolute -ml-11 mt-3.5">
 						<img

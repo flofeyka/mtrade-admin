@@ -55,7 +55,7 @@ export default function Partners() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex">
 						{[
 							"ID",
 							"Дата и время",
@@ -70,7 +70,7 @@ export default function Partners() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
+								className={`min-w-[240px]  border-b-2 border-[#00000033] break-all text-center py-6.5 ${
 									index < 9 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
@@ -83,34 +83,34 @@ export default function Partners() {
 							key={bonus.id}
 							className="flex border-b border-gray-200 text-sm"
 						>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.id}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.createdAt}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.name}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.telegram}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.payoutMethod}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.totalReferrals}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.totalWithdrawals}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.bonusStatus}
 							</span>
-							<span className="w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
+							<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 								{bonus.partnerCode}
 							</span>
-							<span className="w-[240px] text-center py-4 break-all">
+							<span className="min-w-[240px] text-center py-4 break-all">
 								{bonus.referredUsers.join(", ")}
 							</span>
 						</div>

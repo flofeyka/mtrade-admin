@@ -1,71 +1,63 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button";
 
 export default function DashboardHeader() {
+	const navigate = useNavigate();
+
+	const links = [
+		["📊", "Дашборд", "/dashboard/statistics"],
+		["📥", "Заявки", "/dashboard/requests"],
+		["💳", "Оплаты", "/dashboard/payments"],
+		["⚠️", "Незав. оплаты", "/dashboard/not-completed-payments"],
+		["📈", "Аналитика", "/dashboard/analytics"],
+		["👤", "Клиенты", "/dashboard/clients"],
+		["👥", "Посетители", "/dashboard/visitors"],
+		["🤝", "Партнеры", "/dashboard/partners"],
+		["🔔", "Напоминания", "/dashboard/reminders"],
+	];
+
+	const handleMobileNav = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const value = e.target.value;
+		if (value) navigate(value);
+	};
+
 	return (
-		<header className="flex gap-6 items-center justify-between">
-			<span className="bg-white flex relative rounded-xl border-[#0000008F] border-2">
-				<Link
-					to="/dashboard/statistics"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					📊 Дашборд
-				</Link>
-				<Link
-					to="/dashboard/requests"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					📥 Заявки
-				</Link>
-				<Link
-					to="/dashboard/payments"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					💳 Оплаты
-				</Link>
-				<Link
-					to="/dashboard/not-completed-payments"
-					className="border-r-2 w-[135px] text-center text-center cursor-pointer border-[#00000033] p-3"
-				>
-					⚠️ Незав. <br /> оплаты
-				</Link>
-				<Link
-					to="/dashboard/analytics"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					📈 Аналитика
-				</Link>
-				<Link
-					to="/dashboard/clients"
-					className="border-r-2  w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					👤 Клиенты
-				</Link>
-				<Link
-					to="/dashboard/visitors"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3 text-center"
-				>
-					👥 <br /> Посетители
-				</Link>
-				<Link
-					to="/dashboard/partners"
-					className="border-r-2 w-[135px] text-center cursor-pointer border-[#00000033] p-2 py-3"
-				>
-					🤝 <br />
-					Партнеры
-				</Link>
-				<Link
-					to="/dashboard/reminders"
-					className=" cursor-pointer w-[140px] text-center rounded-r-xl p-2 py-3"
-				>
-					🔔 <br />
-					Напоминания
-				</Link>
+		<header className="grid w-full gap-6 max-sm:grid-rows-2 max-sm:grid-cols-1 sm:grid-cols-[1fr_auto] sm:grid-rows-1 items-start">
+			{/* Навигация на десктопе */}
+			<span
+				className="hidden sm:grid w-full bg-white rounded-xl border border-[#0000008F] overflow-hidden 
+               sm:grid-cols-[repeat(auto-fit,minmax(125px,1fr))]"
+			>
+				{links.map(([icon, label, href]) => (
+					<Link
+						key={href}
+						to={href}
+						className="p-4 text-center text-sm border-r border-b border-[#00000033]"
+						dangerouslySetInnerHTML={{ __html: `${icon} <br /> ${label}` }}
+					/>
+				))}
 			</span>
 
-			<span className="flex flex-col gap-3">
-				<Button className="p-3 w-[180px]">👤 administrator</Button>
-				<Button className="p-3 w-[180px]">🔔 Уведомления (2)</Button>
+			{/* Выпадающий список на мобильных */}
+			<select
+				onChange={handleMobileNav}
+				className="sm:hidden w-full p-3 rounded-lg border border-[#0000008F] bg-white text-sm"
+				defaultValue=""
+			>
+				<option value="" disabled>
+					📂 Навигация
+				</option>
+				{links.map(([icon, label, href]) => (
+					<option key={href} value={href}>
+						{icon} {label.replace(/<br\s*\/?>/g, " ")}
+					</option>
+				))}
+			</select>
+
+			{/* Правая часть — кнопки администратора */}
+			<span className="flex flex-col gap-3 sm:w-[200px] max-sm:w-full">
+				<Button className="p-3 w-full">👤 administrator</Button>
+				<Button className="p-3 w-full">🔔 Уведомления (2)</Button>
 			</span>
 		</header>
 	);

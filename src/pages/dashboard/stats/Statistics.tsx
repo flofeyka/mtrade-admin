@@ -61,10 +61,10 @@ export default function Statistics() {
 			<DashboardPeriod />
 			<main>
 				<main className="mt-5">
-					<div className="flex justify-between">
+					<div className="flex justify-between max-[1505px]:flex-col max-sm:gap-10">
 						<span className="flex flex-col items-center gap-7">
 							<h3>Сводка</h3>
-							<div className="bg-[#FFFFFF] rounded-xl border-2 border-[#00000033]">
+							<div className="bg-[#FFFFFF] max-w-[90vw] rounded-xl border-2 border-[#00000033]">
 								<div className="flex border-[#00000033] border-b-2">
 									<span className="w-[225px] border-[#00000033] py-5 border-r-2 text-center">
 										Количество <br /> посетителей
@@ -94,7 +94,7 @@ export default function Statistics() {
 
 						<span className="flex flex-col items-center gap-7">
 							<h3>ТОП Кнопок по кликам</h3>
-							<div className="bg-[#FFFFFF] rounded-xl border-2 border-[#00000033]">
+							<div className="bg-[#FFFFFF] overflow-x-auto max-w-[90vw] rounded-xl border-2 border-[#00000033]">
 								<div className="flex">
 									<span className="w-[260px] border-[#00000033] py-6.5 border-r-2 text-center">
 										№
@@ -123,15 +123,15 @@ export default function Statistics() {
 				</main>
 			</main>
 
-			<footer>
+			<footer className="flex flex-col items-center">
 				<Button className="w-[250px] my-5">Уведомления</Button>
 
 				<div className="w-full mt-10">
 					<span className="flex w-full flex-col items-center gap-7">
-						<div className="bg-[#FFFFFF] w-full rounded-xl border-2 border-[#00000033]">
+						<div className="bg-[#FFFFFF] overflow-x-auto w-full rounded-xl border-2 border-[#00000033]">
 							{notifications.map((button) => (
 								<div className="flex border-[#00000033] border-t-2">
-									<span className="w-[20%] border-[#00000033] border-r-2 py-4 text-center">
+									<span className="w-[20%] min-w-[100px] border-[#00000033] border-r-2 py-4 text-center">
 										{button.date.toLocaleDateString("ru-RU", {
 											month: "long",
 											day: "2-digit",
@@ -139,7 +139,7 @@ export default function Statistics() {
 											minute: "numeric",
 										})}
 									</span>
-									<span className="w-[80%] border-[#00000033] border-r-2  text-center py-4">
+									<span className="w-[80%] min-w-[600px] border-[#00000033] border-r-2  text-center py-4">
 										{button.message}
 									</span>
 								</div>

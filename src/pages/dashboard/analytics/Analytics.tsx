@@ -55,7 +55,7 @@ export default function Analytics() {
 
 			<main>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 border-[#00000033]">
+					<div className="flex">
 						{[
 							"ID кнопки",
 							"Название кнопки",
@@ -67,7 +67,7 @@ export default function Analytics() {
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`w-[260px] break-all text-center py-6.5 ${
+								className={`min-w-[220px] border-[#00000033] border-b-2 break-all text-center py-6.5 ${
 									index < 8 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
@@ -77,31 +77,31 @@ export default function Analytics() {
 					</div>
 					{analytics.map((btn) => (
 						<div key={btn.id} className="flex border-b border-gray-200 text-sm">
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.id}
 							</span>
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.name}
 							</span>
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.clicks}
 							</span>
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.totalRequests}
 							</span>
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.totalPayments}
 							</span>
-							<span className="w-[220px] text-center py-4 border-r-2 border-[#00000033]">
+							<span className="min-w-[220px] text-center py-4 border-r-2 border-[#00000033]">
 								{btn.requestConversion.toFixed(1)}%
 							</span>
-							<span className="w-[220px] text-center py-4">
+							<span className="min-w-[220px] text-center py-4">
 								{btn.paymentConversion.toFixed(1)}%
 							</span>
 						</div>
 					))}
 				</div>
-				<div className="flex justify-between text-3xl">
+				<div className="flex justify-between text-3xl max-[762px]:text-xl">
 					<span>
 						Отображается {analytics.length} из {analytics.length}
 					</span>
