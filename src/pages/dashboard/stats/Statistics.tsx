@@ -7,78 +7,38 @@ import { useGetNotificationsQuery } from "../../../store/api/notificationsApi";
 import { useGetPaymentStatsQuery } from "../../../store/api/paymentsApi";
 import { useGetRequestsQuery } from "../../../store/api/requestsApi";
 import { useGetVisitorsQuery } from "../../../store/api/visitorsApi";
+import { getDateRange } from "../../../utils/dateUtils";
 
 export default function Statistics() {
 	const [selectedPeriod, setSelectedPeriod] = React.useState<PeriodType>(null);
+	const [selectedMonth, setSelectedMonth] = React.useState<string | null>(null);
 
-	// Helper function to get date range based on selected period
-	const getDateRange = (
-		period: PeriodType
-	): { dateFrom?: string; dateTo?: string } => {
-		const now = new Date();
-		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-		switch (period) {
-			case "today":
-				return {
-					dateFrom: today.toISOString(),
-					dateTo: new Date(
-						today.getTime() + 24 * 60 * 60 * 1000 - 1
-					).toISOString(),
-				};
-			case "yesterday":
-				const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-				return {
-					dateFrom: yesterday.toISOString(),
-					dateTo: new Date(
-						yesterday.getTime() + 24 * 60 * 60 * 1000 - 1
-					).toISOString(),
-				};
-			case "week":
-				const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-				return {
-					dateFrom: weekAgo.toISOString(),
-					dateTo: new Date(
-						today.getTime() + 24 * 60 * 60 * 1000 - 1
-					).toISOString(),
-				};
-			case "month":
-				const monthAgo = new Date(
-					today.getFullYear(),
-					today.getMonth() - 1,
-					today.getDate()
-				);
-				return {
-					dateFrom: monthAgo.toISOString(),
-					dateTo: new Date(
-						today.getTime() + 24 * 60 * 60 * 1000 - 1
-					).toISOString(),
-				};
-			default:
-				return {};
-		}
-	};
-
-	const dateRange = getDateRange(selectedPeriod);
+	// Получаем диапазон дат для текущего периода
+	const { dateFrom, dateTo } = getDateRange(selectedPeriod, selectedMonth);
 
 	// API calls for data
 	const { data: visitorsData, isLoading: visitorsLoading } =
-		useGetVisitorsQuery({ page: 1, limit: 1 });
+		useGetVisitorsQuery({ page: 1, limit: 1, dateFrom, dateTo });
 	const { data: requestsData, isLoading: requestsLoading } =
-		useGetRequestsQuery({ page: 1, limit: 1 });
+		useGetRequestsQuery({ page: 1, limit: 1, dateFrom, dateTo });
 	const { data: paymentStats, isLoading: paymentsLoading } =
-		useGetPaymentStatsQuery(dateRange);
+		useGetPaymentStatsQuery({ dateFrom, dateTo });
 	const { data: topButtons, isLoading: buttonsLoading } = useGetTopButtonsQuery(
-		{ limit: 3 }
+		{ limit: 3, dateFrom, dateTo }
 	);
 	const { data: notificationsData, isLoading: notificationsLoading } =
-		useGetNotificationsQuery();
+		useGetNotificationsQuery({ dateFrom, dateTo });
+
+	const handlePeriodChange = (period: PeriodType, month?: string) => {
+		setSelectedPeriod(period);
+		setSelectedMonth(month || null);
+	};
 
 	return (
 		<div className="w-[85vw] flex flex-col self-center">
 			<DashboardPeriod
 				selectedPeriod={selectedPeriod}
-				onPeriodChange={setSelectedPeriod}
+				onPeriodChange={handlePeriodChange}
 			/>
 			<main>
 				<main className="mt-5">

@@ -22,6 +22,12 @@ export interface UpdateNotificationDto {
 	end?: string;
 }
 
+export interface FindNotificationsParams {
+	search?: string;
+	dateFrom?: string;
+	dateTo?: string;
+}
+
 export const notificationsApi = createApi({
 	reducerPath: "notificationsApi",
 	baseQuery: fetchBaseQuery({
@@ -29,8 +35,24 @@ export const notificationsApi = createApi({
 	}),
 	tagTypes: ["Notification"],
 	endpoints: (builder) => ({
-		getNotifications: builder.query<NotificationsListResponse, void>({
-			query: () => "notifications",
+		getNotifications: builder.query<
+			NotificationsListResponse,
+			FindNotificationsParams | void
+		>({
+			query: (params) => {
+				const searchParams = new URLSearchParams();
+				if (params?.search) {
+					searchParams.append("search", params.search);
+				}
+				if (params?.dateFrom) {
+					searchParams.append("dateFrom", params.dateFrom);
+				}
+				if (params?.dateTo) {
+					searchParams.append("dateTo", params.dateTo);
+				}
+				const queryString = searchParams.toString();
+				return `notifications${queryString ? `?${queryString}` : ""}`;
+			},
 			providesTags: ["Notification"],
 		}),
 		getActiveNotifications: builder.query<NotificationsListResponse, void>({

@@ -42,6 +42,19 @@ export interface ButtonStats {
 	buttonCount: number;
 }
 
+export interface GetButtonsParams {
+	page?: number;
+	pageSize?: number;
+	dateFrom?: string;
+	dateTo?: string;
+}
+
+export interface GetTopButtonsParams {
+	limit?: number;
+	dateFrom?: string;
+	dateTo?: string;
+}
+
 export const buttonsApi = createApi({
 	reducerPath: "buttonsApi",
 	baseQuery: fetchBaseQuery({
@@ -49,14 +62,20 @@ export const buttonsApi = createApi({
 	}),
 	tagTypes: ["Button"],
 	endpoints: (builder) => ({
-		getButtons: builder.query<
-			ButtonsResponse,
-			{ page?: number; pageSize?: number }
-		>({
-			query: ({ page = 1, pageSize = 10 } = {}) => ({
-				url: "",
-				params: { page, pageSize },
-			}),
+		getButtons: builder.query<ButtonsResponse, GetButtonsParams>({
+			query: ({ page = 1, pageSize = 10, dateFrom, dateTo } = {}) => {
+				const params: Record<string, string> = {
+					page: page.toString(),
+					pageSize: pageSize.toString(),
+				};
+				if (dateFrom) params.dateFrom = dateFrom;
+				if (dateTo) params.dateTo = dateTo;
+
+				return {
+					url: "",
+					params,
+				};
+			},
 			providesTags: ["Button"],
 		}),
 
@@ -107,11 +126,20 @@ export const buttonsApi = createApi({
 			providesTags: ["Button"],
 		}),
 
-		getTopButtons: builder.query<Button[], { limit?: number }>({
-			query: ({ limit = 5 } = {}) => ({
-				url: "",
-				params: { pageSize: limit, page: 1 },
-			}),
+		getTopButtons: builder.query<Button[], GetTopButtonsParams>({
+			query: ({ limit = 5, dateFrom, dateTo } = {}) => {
+				const params: Record<string, string> = {
+					pageSize: limit.toString(),
+					page: "1",
+				};
+				if (dateFrom) params.dateFrom = dateFrom;
+				if (dateTo) params.dateTo = dateTo;
+
+				return {
+					url: "",
+					params,
+				};
+			},
 			transformResponse: (response: ButtonsResponse) =>
 				response.data.sort((a, b) => b.clickCount - a.clickCount),
 			providesTags: ["Button"],

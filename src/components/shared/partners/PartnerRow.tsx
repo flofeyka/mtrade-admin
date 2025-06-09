@@ -52,35 +52,32 @@ const PartnerRow: React.FC<PartnerRowProps> = ({
 	return (
 		<>
 			<div className="flex border-b border-gray-200 text-sm hover:bg-gray-50 group">
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 					{partner.id}
 				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+					{formatDate(partner.createdAt)}
+				</span>
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 					{partner.name}
 				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 					{partner.username}
 				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
-					{partner.requisites}
-				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
-					{getRequisiteTypeText(partner.requisiteType)}
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+					{getRequisiteTypeText(partner.requisiteType)}: {partner.requisites}
 				</span>
 				<span
-					className={`min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033] ${getBonusStatusColor(
+					className={`min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033] ${getBonusStatusColor(
 						partner.bonusStatus
 					)}`}
 				>
 					{getBonusStatusText(partner.bonusStatus)}
 				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 					{partner.code}
 				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
-					{formatDate(partner.createdAt)}
-				</span>
-				<span className="min-w-[200px] text-center border-b-2 py-4 border-[#00000033] relative">
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-[#00000033] relative">
 					<div className="flex justify-center items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
 						<button
 							onClick={() => onEdit(partner)}

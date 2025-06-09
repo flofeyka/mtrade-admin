@@ -1,22 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import type { PeriodType } from "../../../components/shared/dashboard/DashboardPeriod";
 import DashboardPeriod from "../../../components/shared/dashboard/DashboardPeriod";
+import { ContainerLoader } from "../../../components/shared/Loader";
 import { RequestForm } from "../../../components/shared/requests/RequestForm";
 import { RequestRow } from "../../../components/shared/requests/RequestRow";
-import { ContainerLoader } from "../../../components/shared/Loader";
-import { useGetRequestsQuery } from "../../../store/api/requestsApi";
+import { useDebounce } from "../../../hooks/useDebounce";
 import type { Request } from "../../../store/api/requestsApi";
+import { useGetRequestsQuery } from "../../../store/api/requestsApi";
+import { getDateRange } from "../../../utils/dateUtils";
 
 export default function Requests() {
 	const [search, setSearch] = useState<string>("");
 	const [currentPage, setCurrentPage] = useState(1);
+	const [pageSize, setPageSize] = useState<number>(10);
 	const [showForm, setShowForm] = useState(false);
 	const [editingRequest, setEditingRequest] = useState<Request | null>(null);
+	const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>(null);
+	const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
+
+	// Дебаунс поиска на 500мс
+	const debouncedSearch = useDebounce(search, 500);
+
+	const dateRange = getDateRange(selectedPeriod, selectedMonth);
+
+	// Обработчик изменения периода
+	const handlePeriodChange = (period: PeriodType, month?: string) => {
+		setSelectedPeriod(period);
+		setSelectedMonth(month || null);
+	};
 
 	const { data, error, isLoading, refetch } = useGetRequestsQuery({
 		page: currentPage,
-		limit: 10,
+		limit: pageSize,
+		search: debouncedSearch.trim() || undefined,
+		dateFrom: dateRange.dateFrom,
+		dateTo: dateRange.dateTo,
 	});
+
+	// Сброс страницы при изменении pageSize, поиска, периода или месяца
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [pageSize, debouncedSearch, selectedPeriod, selectedMonth]);
 
 	const handleEdit = (request: Request) => {
 		setEditingRequest(request);
@@ -70,7 +95,12 @@ export default function Requests() {
 	return (
 		<div>
 			<header className="flex justify-between items-center mb-4">
-				<DashboardPeriod search={search} setSearch={setSearch} />
+				<DashboardPeriod
+					search={search}
+					setSearch={setSearch}
+					selectedPeriod={selectedPeriod}
+					onPeriodChange={handlePeriodChange}
+				/>
 			</header>
 
 			<main>
@@ -105,8 +135,12 @@ export default function Requests() {
 						))}
 					</div>
 					{requests.length === 0 ? (
-						<div className="text-center py-8 text-gray-500">
-							Заявки не найдены
+						<div className="py-8 text-center">
+							<div className="sticky left-1/2 transform -translate-x-1/2 text-gray-500 inline-block">
+								{debouncedSearch
+									? "По вашему запросу ничего не найдено"
+									: "Заявки не найдены"}
+							</div>
 						</div>
 					) : (
 						requests.map((request: Request) => (
@@ -120,24 +154,70 @@ export default function Requests() {
 				</div>
 
 				{/* Пагинация */}
-				<div className="flex justify-between text-3xl max-sm:text-xl mt-4">
-					<span>
-						Отображается {requests.length} из {data?.total || 0}
-					</span>
-					<div className="flex gap-3">
-						{Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-							<button
-								key={page}
-								onClick={() => setCurrentPage(page)}
-								className={`px-3 py-1 ${
-									currentPage === page
-										? "bg-blue-500 text-white"
-										: "bg-gray-200 text-gray-700 hover:bg-gray-300"
-								} rounded`}
+				<div className="flex justify-between items-center mt-4">
+					<div className="flex items-center gap-4">
+						<span className="text-lg">
+							Отображается {requests.length} из {data?.total || 0}
+						</span>
+						<div className="flex items-center gap-2">
+							<label className="text-sm">Записей на странице:</label>
+							<select
+								value={pageSize}
+								onChange={(e) => setPageSize(Number(e.target.value))}
+								className="px-2 py-1 border border-gray-300 rounded text-sm"
 							>
-								{page}
-							</button>
-						))}
+								<option value={10}>10</option>
+								<option value={20}>20</option>
+								<option value={50}>50</option>
+								<option value={100}>100</option>
+							</select>
+						</div>
+					</div>
+					<div className="flex items-center gap-2">
+						<button
+							onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+							disabled={currentPage === 1}
+							className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							Назад
+						</button>
+						<div className="flex gap-1">
+							{Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+								let page;
+								if (totalPages <= 5) {
+									page = i + 1;
+								} else if (currentPage <= 3) {
+									page = i + 1;
+								} else if (currentPage >= totalPages - 2) {
+									page = totalPages - 4 + i;
+								} else {
+									page = currentPage - 2 + i;
+								}
+
+								return (
+									<button
+										key={page}
+										onClick={() => setCurrentPage(page)}
+										className={`px-3 py-1 rounded ${
+											currentPage === page
+												? "bg-blue-500 text-white"
+												: "bg-gray-200 text-gray-700 hover:bg-gray-300"
+										}`}
+									>
+										{page}
+									</button>
+								);
+							})}
+						</div>
+						<button
+							onClick={() =>
+								setCurrentPage(Math.min(totalPages, currentPage + 1))
+							}
+							disabled={currentPage === totalPages}
+							className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							Вперед
+						</button>
 					</div>
 				</div>
 			</main>
