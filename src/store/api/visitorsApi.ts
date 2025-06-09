@@ -47,10 +47,13 @@ export interface UpdateVisitorDto {
 interface VisitorFilters {
 	page?: number;
 	limit?: number;
+	search?: string;
 	country?: string;
 	device?: string;
 	browser?: string;
 	trafficSource?: string;
+	dateFrom?: string;
+	dateTo?: string;
 }
 
 interface VisitorStats {

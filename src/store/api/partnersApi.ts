@@ -44,6 +44,12 @@ export interface UpdatePartnerDto {
 	code?: string;
 }
 
+export interface FindPartnersParams {
+	search?: string;
+	dateFrom?: string;
+	dateTo?: string;
+}
+
 export const partnersApi = createApi({
 	reducerPath: "partnersApi",
 	baseQuery: fetchBaseQuery({
@@ -51,10 +57,25 @@ export const partnersApi = createApi({
 	}),
 	tagTypes: ["Partner"],
 	endpoints: (builder) => ({
-		getPartners: builder.query<PartnersListResponse, void>({
-			query: () => "partners",
-			providesTags: ["Partner"],
-		}),
+		getPartners: builder.query<PartnersListResponse, FindPartnersParams | void>(
+			{
+				query: (params) => {
+					const searchParams = new URLSearchParams();
+					if (params?.search) {
+						searchParams.append("search", params.search);
+					}
+					if (params?.dateFrom) {
+						searchParams.append("dateFrom", params.dateFrom);
+					}
+					if (params?.dateTo) {
+						searchParams.append("dateTo", params.dateTo);
+					}
+					const queryString = searchParams.toString();
+					return `partners${queryString ? `?${queryString}` : ""}`;
+				},
+				providesTags: ["Partner"],
+			}
+		),
 		getPartner: builder.query<Partner, number>({
 			query: (id) => `partners/${id}`,
 			providesTags: (_, __, id) => [{ type: "Partner", id }],

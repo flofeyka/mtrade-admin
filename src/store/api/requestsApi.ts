@@ -63,9 +63,19 @@ export const requestsApi = createApi({
 				status?: string;
 				source?: string;
 				search?: string;
+				dateFrom?: string;
+				dateTo?: string;
 			}
 		>({
-			query: ({ page = 1, limit = 10, status, source, search }) => {
+			query: ({
+				page = 1,
+				limit = 10,
+				status,
+				source,
+				search,
+				dateFrom,
+				dateTo,
+			}) => {
 				const params = new URLSearchParams({
 					page: page.toString(),
 					limit: limit.toString(),
@@ -74,6 +84,8 @@ export const requestsApi = createApi({
 				if (status) params.append("status", status);
 				if (source) params.append("source", source);
 				if (search) params.append("search", search);
+				if (dateFrom) params.append("dateFrom", dateFrom);
+				if (dateTo) params.append("dateTo", dateTo);
 
 				return `requests?${params.toString()}`;
 			},

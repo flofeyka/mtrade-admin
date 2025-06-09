@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import DashboardPeriod from "../../../components/shared/dashboard/DashboardPeriod";
+import type { PeriodType } from "../../../components/shared/dashboard/DashboardPeriod";
 import { ContainerLoader } from "../../../components/shared/Loader";
 import { useGetVisitorsQuery } from "../../../store/api/visitorsApi";
 import type { Visitor } from "../../../store/api/visitorsApi";
 import VisitorForm from "../../../components/shared/visitors/VisitorForm";
 import VisitorRow from "../../../components/shared/visitors/VisitorRow";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { getDateRange } from "../../../utils/dateUtils";
 
 export default function Visitors() {
 	const [search, setSearch] = React.useState<string>("");
@@ -13,15 +16,36 @@ export default function Visitors() {
 	const [pageSize, setPageSize] = useState<number>(10);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [editingVisitor, setEditingVisitor] = useState<Visitor | null>(null);
+	const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>(null);
+	const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
+
+	// Дебаунс поиска на 500мс
+	const debouncedSearch = useDebounce(search, 500);
+
+	const dateRange = getDateRange(selectedPeriod, selectedMonth);
+
+	// Обработчик изменения периода
+	const handlePeriodChange = (period: PeriodType, month?: string) => {
+		setSelectedPeriod(period);
+		setSelectedMonth(month || null);
+	};
 
 	const { data, error, isLoading, refetch } = useGetVisitorsQuery({
 		page: currentPage,
 		limit: pageSize,
+		search: debouncedSearch.trim() || undefined,
+		dateFrom: dateRange.dateFrom,
+		dateTo: dateRange.dateTo,
 	});
 
 	const visitors = data?.visitors || [];
 	const total = data?.total || 0;
 	const totalPages = data?.totalPages || 1;
+
+	// Сброс страницы при изменении поиска, периода или месяца
+	React.useEffect(() => {
+		setCurrentPage(1);
+	}, [debouncedSearch, selectedPeriod, selectedMonth]);
 
 	const handleOpenForm = () => {
 		setShowForm(true);
@@ -72,7 +96,12 @@ export default function Visitors() {
 	return (
 		<div>
 			<header>
-				<DashboardPeriod search={search} setSearch={setSearch} />
+				<DashboardPeriod
+					search={search}
+					setSearch={setSearch}
+					selectedPeriod={selectedPeriod}
+					onPeriodChange={handlePeriodChange}
+				/>
 			</header>
 
 			<main>
@@ -111,8 +140,12 @@ export default function Visitors() {
 						))}
 					</div>
 					{visitors.length === 0 && !isLoading ? (
-						<div className="text-center py-8 text-gray-500">
-							Посетители не найдены
+						<div className="py-8 text-center">
+							<div className="sticky left-1/2 transform -translate-x-1/2 text-gray-500 inline-block">
+								{debouncedSearch
+									? "По вашему запросу ничего не найдено"
+									: "Посетители не найдены"}
+							</div>
 						</div>
 					) : (
 						visitors.map((visitor) => (
