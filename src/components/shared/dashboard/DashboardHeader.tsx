@@ -1,15 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../Button";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Button from "../../Button";
 
 export default function DashboardHeader() {
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const links = [
 		["📊", "Дашборд", "/dashboard/statistics"],
 		["📥", "Заявки", "/dashboard/requests"],
 		["💳", "Оплаты", "/dashboard/payments"],
 		["⚠️", "Незав. оплаты", "/dashboard/not-completed-payments"],
-		["📈", "Аналитика", "/dashboard/analytics"],
 		["👤", "Клиенты", "/dashboard/clients"],
 		["👥", "Посетители", "/dashboard/visitors"],
 		["🤝", "Партнеры", "/dashboard/partners"],
@@ -28,14 +28,19 @@ export default function DashboardHeader() {
 				className="hidden sm:grid w-full bg-white rounded-xl border border-[#0000008F] overflow-hidden 
                sm:grid-cols-[repeat(auto-fit,minmax(125px,1fr))]"
 			>
-				{links.map(([icon, label, href]) => (
-					<Link
-						key={href}
-						to={href}
-						className="p-4 text-center text-sm border-r border-b border-[#00000033]"
-						dangerouslySetInnerHTML={{ __html: `${icon} <br /> ${label}` }}
-					/>
-				))}
+				{links.map(([icon, label, href]) => {
+					const isActive = location.pathname === href;
+					return (
+						<Link
+							key={href}
+							to={href}
+							className={`p-4 text-center text-sm border-r border-b border-[#00000033] ${
+								isActive ? "bg-gray-200" : "hover:bg-gray-100"
+							} transition-colors duration-200`}
+							dangerouslySetInnerHTML={{ __html: `${icon} <br /> ${label}` }}
+						/>
+					);
+				})}
 			</span>
 
 			{/* Выпадающий список на мобильных */}

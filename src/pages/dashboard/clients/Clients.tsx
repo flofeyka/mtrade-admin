@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import DashboardPeriod from "../../../components/shared/DashboardPeriod";
+import DashboardPeriod from "../../../components/shared/dashboard/DashboardPeriod";
 
 interface Client {
 	id: string;

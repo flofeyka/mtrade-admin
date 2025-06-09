@@ -1,80 +1,87 @@
-import React, { useEffect } from "react";
-import DashboardPeriod from "../../../components/shared/DashboardPeriod";
-
-interface RequestData {
-	id: string; // Идентификатор заявки
-	datetime: string; // Дата и время
-	fullName: string; // Имя и фамилия
-	phone: string; // Номер телефона
-	email: string; // Электронная почта
-	telegram: string; // Ник в Telegram
-	partnerCode: string; // Партнёрский код
-	source: string; // Источник (кнопка)
-	status: "Новая" | "В работе" | "Завершена" | "Отклонена"; // Статус заявки
-}
+import { useState } from "react";
+import { toast } from "react-toastify";
+import DashboardPeriod from "../../../components/shared/dashboard/DashboardPeriod";
+import { RequestForm } from "../../../components/shared/requests/RequestForm";
+import { RequestRow } from "../../../components/shared/requests/RequestRow";
+import { ContainerLoader } from "../../../components/shared/Loader";
+import { useGetRequestsQuery } from "../../../store/api/requestsApi";
+import type { Request } from "../../../store/api/requestsApi";
 
 export default function Requests() {
-	const [search, setSearch] = React.useState<string>("");
-	const [requests, setRequests] = React.useState<RequestData[]>([]);
+	const [search, setSearch] = useState<string>("");
+	const [currentPage, setCurrentPage] = useState(1);
+	const [showForm, setShowForm] = useState(false);
+	const [editingRequest, setEditingRequest] = useState<Request | null>(null);
 
-	useEffect(() => {
-		setRequests([
-			{
-				id: "REQ-20240523-001",
-				datetime: "23.05.2025 14:32",
-				fullName: "Иван Петров",
-				phone: "+7 912 345-67-89",
-				email: "ivan.petrov@example.com",
-				telegram: "@ivanpetrov",
-				partnerCode: "PART-1234",
-				source: "Кнопка “Оставить заявку”",
-				status: "Новая",
-			},
-			{
-				id: "REQ-20240523-002",
-				datetime: "23.05.2025 14:47",
-				fullName: "Мария Смирнова",
-				phone: "+7 916 123-45-67",
-				email: "m.smirnova@mail.ru",
-				telegram: "@msmirnova",
-				partnerCode: "PART-5678",
-				source: "Кнопка “Связаться”",
-				status: "В работе",
-			},
-			{
-				id: "REQ-20240523-003",
-				datetime: "23.05.2025 15:02",
-				fullName: "Алексей Волков",
-				phone: "+7 903 987-65-43",
-				email: "a.volkov@yandex.ru",
-				telegram: "@alexvolk",
-				partnerCode: "PART-9012",
-				source: "Кнопка “Оставить заявку”",
-				status: "Завершена",
-			},
-			{
-				id: "REQ-20240523-004",
-				datetime: "23.05.2025 15:15",
-				fullName: "Ольга Сидорова",
-				phone: "+7 905 321-12-34",
-				email: "olga.sid@example.com",
-				telegram: "@osidorova",
-				partnerCode: "",
-				source: "Кнопка “Узнать больше”",
-				status: "Отклонена",
-			},
-		]);
-	}, []);
+	const { data, error, isLoading, refetch } = useGetRequestsQuery({
+		page: currentPage,
+		limit: 10,
+	});
+
+	const handleEdit = (request: Request) => {
+		setEditingRequest(request);
+		setShowForm(true);
+	};
+
+	const handleCloseForm = () => {
+		setShowForm(false);
+		setEditingRequest(null);
+	};
+
+	const handleSuccess = () => {
+		refetch();
+	};
+
+	const handleRefresh = async () => {
+		try {
+			await refetch().unwrap();
+			toast.success("Данные обновлены!");
+		} catch (error) {
+			toast.error("Ошибка обновления данных");
+		}
+	};
+
+	const handleAddNew = () => {
+		setEditingRequest(null);
+		setShowForm(true);
+	};
+
+	if (isLoading) {
+		return <ContainerLoader text="Загрузка заявок..." className="h-64" />;
+	}
+
+	if (error) {
+		return (
+			<div className="flex flex-col justify-center items-center h-64 space-y-4">
+				<div className="text-lg text-red-500">Ошибка загрузки заявок</div>
+				<button
+					onClick={handleRefresh}
+					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+				>
+					Попробовать снова
+				</button>
+			</div>
+		);
+	}
+
+	const requests = data?.requests || [];
+	const totalPages = data?.totalPages || 1;
 
 	return (
 		<div>
-			<header>
+			<header className="flex justify-between items-center mb-4">
 				<DashboardPeriod search={search} setSearch={setSearch} />
 			</header>
 
 			<main>
+				<button
+					onClick={handleAddNew}
+					className="px-4 flex justify-self-end mb-5 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+				>
+					Добавить заявку
+				</button>
 				<div className="bg-[#FFFFFF] overflow-x-auto rounded-xl border-2 border-[#00000033]">
-					<div className="flex border-b-2 w-full border-[#00000033]">
+					<div className="flex w-full border-[#00000033]">
 						{[
 							"ID заявки",
 							"Дата и время",
@@ -83,62 +90,70 @@ export default function Requests() {
 							"Почта",
 							"Телеграм",
 							"Партнерский код",
-							"Источник (кнопка)",
+							"Источник",
 							"Статус",
+							"Действия",
 						].map((header, index) => (
 							<span
 								key={index}
-								className={`min-w-[260px] break-all text-center py-6.5 ${
-									index < 8 ? "border-r-2 border-[#00000033]" : ""
+								className={`min-w-[260px] border-b-2 border-[#00000033] break-all text-center py-6.5 ${
+									index < 9 ? "border-r-2 " : ""
 								}`}
 							>
 								{header}
 							</span>
 						))}
 					</div>
-					{requests.map((req: RequestData) => (
-						<div key={req.id} className="flex border-b border-gray-200 text-sm">
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.id}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.datetime}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.fullName}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.phone}
-							</span>
-							<span className="min-w-[260px] break-all text-center py-4 border-r-2 border-[#00000033]">
-								{req.email}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.telegram}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.partnerCode}
-							</span>
-							<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
-								{req.source}
-							</span>
-							<span className="min-w-[260px] text-center py-4">
-								{req.status}
-							</span>
+					{requests.length === 0 ? (
+						<div className="text-center py-8 text-gray-500">
+							Заявки не найдены
 						</div>
-					))}
+					) : (
+						requests.map((request: Request) => (
+							<RequestRow
+								key={request.id}
+								request={request}
+								onEdit={handleEdit}
+							/>
+						))
+					)}
 				</div>
-				<div className="flex justify-between text-3xl max-sm:text-xl">
+
+				{/* Пагинация */}
+				<div className="flex justify-between text-3xl max-sm:text-xl mt-4">
 					<span>
-						Отображается {requests.length} из {requests.length}
+						Отображается {requests.length} из {data?.total || 0}
 					</span>
-					<span className="flex gap-3">
-						<span>1</span>
-						<span>2</span>
-						<span>3</span>
-					</span>
+					<div className="flex gap-3">
+						{Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+							<button
+								key={page}
+								onClick={() => setCurrentPage(page)}
+								className={`px-3 py-1 ${
+									currentPage === page
+										? "bg-blue-500 text-white"
+										: "bg-gray-200 text-gray-700 hover:bg-gray-300"
+								} rounded`}
+							>
+								{page}
+							</button>
+						))}
+					</div>
 				</div>
 			</main>
+
+			{/* Модальное окно формы */}
+			{showForm && (
+				<div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
+					<div className="bg-white rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+						<RequestForm
+							onClose={handleCloseForm}
+							onSuccess={handleSuccess}
+							editingRequest={editingRequest}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
