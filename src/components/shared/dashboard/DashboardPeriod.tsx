@@ -98,7 +98,7 @@ export default function DashboardPeriod({
 					: "justify-center"
 			} w-full mb-12`}
 		>
-			<div className="relative">
+			<div className="relative max-[762px]:w-full">
 				<div className="bg-[#FFFFFF] max-[762px]:flex-wrap max-[762px]:w-full border-2 border-[#00000033] overflow-hidden rounded-xl min-[762px]-h-[60px] min-[762px]:flex self-center min-[762px]:items-center">
 					{periods.map((period, index) => (
 						<button

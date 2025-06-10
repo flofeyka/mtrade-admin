@@ -160,7 +160,7 @@ export default function Visitors() {
 				</div>
 
 				{/* Пагинация */}
-				<div className="flex justify-between items-center mt-4">
+				<div className="flex justify-between items-center mt-4 max-[762px]:flex-col">
 					<div className="flex items-center gap-4">
 						<span className="text-lg">
 							Отображается {visitors.length} из {total}

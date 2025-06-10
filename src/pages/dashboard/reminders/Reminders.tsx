@@ -127,7 +127,7 @@ export default function Reminders() {
 				{/* Кнопка добавления */}
 				<button
 					onClick={handleOpenForm}
-					className="w-[200px] h-[200px] bg-[#FFFFFF] border-[#757575] border-3 rounded-md text-6xl cursor-pointer hover:bg-gray-50 transition-colors"
+					className="w-[200px] max-sm:w-[45vw] max-sm:h-[45vw] h-[200px] bg-[#FFFFFF] border-[#757575] border-3 rounded-md text-6xl cursor-pointer hover:bg-gray-50 transition-colors"
 				>
 					+
 				</button>
@@ -144,7 +144,7 @@ export default function Reminders() {
 			</div>
 
 			{/* Пагинация */}
-			<div className="flex justify-between items-center mt-4">
+			<div className="flex justify-between items-center mt-4 max-[762px]:flex-col">
 				<div className="flex items-center gap-4">
 					<span className="text-lg">
 						Отображается {paginatedNotifications.length} из {total}

@@ -91,7 +91,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 	return (
 		<>
 			<div
-				className={`relative w-[200px] h-[200px] bg-[#FFFFFF] border-[#757575] border-3 flex flex-col justify-between p-3 text-center rounded-md text-2xl cursor-pointer group ${
+				className={`relative w-[200px] h-[200px] max-sm:w-[45vw] max-sm:h-[45vw] bg-[#FFFFFF] border-[#757575] border-3 flex flex-col justify-between p-3 text-center rounded-md text-2xl cursor-pointer group ${
 					isExpired ? "opacity-50" : ""
 				}`}
 			>

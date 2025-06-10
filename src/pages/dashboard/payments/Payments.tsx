@@ -234,7 +234,7 @@ export default function Payments({ status = "COMPLETED" }: PaymentsProps) {
 				</div>
 
 				{/* Пагинация */}
-				<div className="flex justify-between items-center mt-4">
+				<div className="flex justify-between items-center mt-4 max-[762px]:flex-col">
 					<div className="flex items-center gap-4">
 						<span className="text-lg">
 							Отображается {paymentsData?.payments.length || 0} из{" "}

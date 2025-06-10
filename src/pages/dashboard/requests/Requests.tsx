@@ -94,14 +94,12 @@ export default function Requests() {
 
 	return (
 		<div>
-			<header className="flex justify-between items-center mb-4">
-				<DashboardPeriod
-					search={search}
-					setSearch={setSearch}
-					selectedPeriod={selectedPeriod}
-					onPeriodChange={handlePeriodChange}
-				/>
-			</header>
+			<DashboardPeriod
+				search={search}
+				setSearch={setSearch}
+				selectedPeriod={selectedPeriod}
+				onPeriodChange={handlePeriodChange}
+			/>
 
 			<main>
 				<button
@@ -154,9 +152,9 @@ export default function Requests() {
 				</div>
 
 				{/* Пагинация */}
-				<div className="flex justify-between items-center mt-4">
-					<div className="flex items-center gap-4">
-						<span className="text-lg">
+				<div className="flex justify-between max-[762px]:flex-col max-[762px]:gap-2 items-center mt-4">
+					<div className="flex min-[762px]:items-center gap-4 max-[762px]:items-baseline">
+						<span className="min-[762px]:text-lg">
 							Отображается {requests.length} из {data?.total || 0}
 						</span>
 						<div className="flex items-center gap-2">
@@ -164,7 +162,7 @@ export default function Requests() {
 							<select
 								value={pageSize}
 								onChange={(e) => setPageSize(Number(e.target.value))}
-								className="px-2 py-1 border border-gray-300 rounded text-sm"
+								className="min-[762px]:px-2 py-1 border border-gray-300 rounded text-sm"
 							>
 								<option value={10}>10</option>
 								<option value={20}>20</option>
