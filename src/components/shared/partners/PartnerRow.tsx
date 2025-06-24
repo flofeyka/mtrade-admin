@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { useDeletePartnerMutation } from "../../../store/api/partnersApi";
+import {
+	useDeletePartnerMutation,
+	type Partner,
+} from "../../../store/api/partnersApi";
 
 interface PartnerRowProps {
-	partner: any;
-	onEdit: (partner: any) => void;
+	partner: Partner;
+	onEdit: (partner: Partner) => void;
 	onRefresh: () => void;
 }
 
@@ -49,6 +52,17 @@ const PartnerRow: React.FC<PartnerRowProps> = ({
 		}
 	};
 
+	const renderRecentRequests = () => {
+		if (!partner.recentRequests || partner.recentRequests.length === 0) {
+			return "Нет заявок";
+		}
+
+		return partner.recentRequests
+			.slice(0, 3) // Показываем максимум 3 последние заявки
+			.map((request) => request.fullName)
+			.join(", ");
+	};
+
 	return (
 		<>
 			<div className="flex border-b border-gray-200 text-sm hover:bg-gray-50 group">
@@ -66,6 +80,12 @@ const PartnerRow: React.FC<PartnerRowProps> = ({
 				</span>
 				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
 					{getRequisiteTypeText(partner.requisiteType)}: {partner.requisites}
+				</span>
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+					{partner.requestsCount || 0}
+				</span>
+				<span className="min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033]">
+					{renderRecentRequests()}
 				</span>
 				<span
 					className={`min-w-[240px] text-center border-b-2 py-4 border-r-2 border-[#00000033] ${getBonusStatusColor(

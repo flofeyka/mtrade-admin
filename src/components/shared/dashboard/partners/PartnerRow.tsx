@@ -88,10 +88,15 @@ export const PartnerRow: React.FC<PartnerRowProps> = ({
 				{formatPayoutMethod(partner.requisiteType, partner.requisites)}
 			</span>
 			<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
-				{partner.users?.length || 0}
+				{partner.requestsCount || 0}
 			</span>
 			<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
-				-
+				{partner.recentRequests && partner.recentRequests.length > 0
+					? partner.recentRequests
+							.slice(0, 2)
+							.map((req) => req.fullName)
+							.join(", ")
+					: "-"}
 			</span>
 			<span className="min-w-[240px] text-center py-4 border-r-2 border-[#00000033] break-all">
 				{formatBonusStatus(partner.bonusStatus)}

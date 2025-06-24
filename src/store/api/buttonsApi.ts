@@ -47,12 +47,14 @@ export interface GetButtonsParams {
 	pageSize?: number;
 	dateFrom?: string;
 	dateTo?: string;
+	filterByUpdated?: boolean;
 }
 
 export interface GetTopButtonsParams {
 	limit?: number;
 	dateFrom?: string;
 	dateTo?: string;
+	filterByUpdated?: boolean;
 }
 
 export const buttonsApi = createApi({
@@ -63,13 +65,20 @@ export const buttonsApi = createApi({
 	tagTypes: ["Button"],
 	endpoints: (builder) => ({
 		getButtons: builder.query<ButtonsResponse, GetButtonsParams>({
-			query: ({ page = 1, pageSize = 10, dateFrom, dateTo } = {}) => {
+			query: ({
+				page = 1,
+				pageSize = 10,
+				dateFrom,
+				dateTo,
+				filterByUpdated,
+			} = {}) => {
 				const params: Record<string, string> = {
 					page: page.toString(),
 					pageSize: pageSize.toString(),
 				};
 				if (dateFrom) params.dateFrom = dateFrom;
 				if (dateTo) params.dateTo = dateTo;
+				if (filterByUpdated) params.filterByUpdated = "true";
 
 				return {
 					url: "",
@@ -121,19 +130,30 @@ export const buttonsApi = createApi({
 			invalidatesTags: (_, __, id) => [{ type: "Button", id }],
 		}),
 
-		getClickStats: builder.query<ButtonStats[], void>({
-			query: () => "/stats/clicks",
+		getClickStats: builder.query<
+			ButtonStats[],
+			{ dateFrom?: string; dateTo?: string }
+		>({
+			query: ({ dateFrom, dateTo } = {}) => {
+				const params: Record<string, string> = {};
+				if (dateFrom) params.dateFrom = dateFrom;
+				if (dateTo) params.dateTo = dateTo;
+
+				const queryString = new URLSearchParams(params).toString();
+				return `stats/clicks${queryString ? `?${queryString}` : ""}`;
+			},
 			providesTags: ["Button"],
 		}),
 
 		getTopButtons: builder.query<Button[], GetTopButtonsParams>({
-			query: ({ limit = 5, dateFrom, dateTo } = {}) => {
+			query: ({ limit = 5, dateFrom, dateTo, filterByUpdated = true } = {}) => {
 				const params: Record<string, string> = {
 					pageSize: limit.toString(),
 					page: "1",
 				};
 				if (dateFrom) params.dateFrom = dateFrom;
 				if (dateTo) params.dateTo = dateTo;
+				if (filterByUpdated) params.filterByUpdated = "true";
 
 				return {
 					url: "",

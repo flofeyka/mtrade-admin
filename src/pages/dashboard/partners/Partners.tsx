@@ -123,6 +123,8 @@ export default function Partners() {
 							"Имя",
 							"Username",
 							"Способ выплаты и реквизиты",
+							"Кол-во заявок",
+							"Последние заявки",
 							"Статус бонуса",
 							"Партнерский код",
 							"Действия",
@@ -130,7 +132,7 @@ export default function Partners() {
 							<span
 								key={index}
 								className={`min-w-[240px]  border-b-2 border-[#00000033] break-all text-center py-6.5 ${
-									index < 7 ? "border-r-2 border-[#00000033]" : ""
+									index < 9 ? "border-r-2 border-[#00000033]" : ""
 								}`}
 							>
 								{header}

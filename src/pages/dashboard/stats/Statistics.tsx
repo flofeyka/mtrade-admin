@@ -4,7 +4,6 @@ import DashboardPeriod from "../../../components/shared/dashboard/DashboardPerio
 import type { PeriodType } from "../../../components/shared/dashboard/DashboardPeriod";
 import { useGetTopButtonsQuery } from "../../../store/api/buttonsApi";
 import { useGetNotificationsQuery } from "../../../store/api/notificationsApi";
-import { useGetPaymentStatsQuery } from "../../../store/api/paymentsApi";
 import { useGetRequestsQuery } from "../../../store/api/requestsApi";
 import { useGetVisitorsQuery } from "../../../store/api/visitorsApi";
 import { getDateRange } from "../../../utils/dateUtils";
@@ -21,10 +20,8 @@ export default function Statistics() {
 		useGetVisitorsQuery({ page: 1, limit: 1, dateFrom, dateTo });
 	const { data: requestsData, isLoading: requestsLoading } =
 		useGetRequestsQuery({ page: 1, limit: 1, dateFrom, dateTo });
-	const { data: paymentStats, isLoading: paymentsLoading } =
-		useGetPaymentStatsQuery({ dateFrom, dateTo });
 	const { data: topButtons, isLoading: buttonsLoading } = useGetTopButtonsQuery(
-		{ limit: 3, dateFrom, dateTo }
+		{ limit: 5, dateFrom, dateTo }
 	);
 	const { data: notificationsData, isLoading: notificationsLoading } =
 		useGetNotificationsQuery({ dateFrom, dateTo });
@@ -60,22 +57,6 @@ export default function Statistics() {
 									</span>
 									<span className="w-[225px] text-center py-5">
 										{requestsLoading ? "..." : requestsData?.total || 0}
-									</span>
-								</div>
-								<div className="flex border-[#00000033] border-t-2">
-									<span className="w-[225px] border-[#00000033] border-r-2 py-5 text-center">
-										Количество оплат
-									</span>
-									<span className="w-[225px] text-center py-5">
-										{paymentsLoading ? "..." : paymentStats?.completed || 0}
-									</span>
-								</div>
-								<div className="flex border-[#00000033] border-t-2">
-									<span className="w-[225px] border-[#00000033] border-r-2 py-5 text-center">
-										Незавершенные <br /> оплаты
-									</span>
-									<span className="w-[225px] text-center py-5">
-										{paymentsLoading ? "..." : paymentStats?.pending || 0}
 									</span>
 								</div>
 							</div>

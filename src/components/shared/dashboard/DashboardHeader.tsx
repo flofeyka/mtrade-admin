@@ -8,9 +8,6 @@ export default function DashboardHeader() {
 	const links = [
 		["📊", "Дашборд", "/dashboard/statistics"],
 		["📥", "Заявки", "/dashboard/requests"],
-		["💳", "Оплаты", "/dashboard/payments"],
-		["⚠️", "Незав. оплаты", "/dashboard/not-completed-payments"],
-		["👤", "Клиенты", "/dashboard/clients"],
 		["👥", "Посетители", "/dashboard/visitors"],
 		["🤝", "Партнеры", "/dashboard/partners"],
 		["🔔", "Напоминания", "/dashboard/reminders"],

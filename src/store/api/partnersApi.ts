@@ -9,16 +9,15 @@ export interface Partner {
 	bonusStatus: "PENDING" | "COMPLETED";
 	code: string;
 	createdAt: string;
-	users?: User[];
+	requestsCount?: number;
+	recentRequests?: PartnerRequest[];
 }
 
-interface User {
+interface PartnerRequest {
 	id: number;
-	firstName: string;
-	lastName?: string;
-	username: string;
-	phone: string;
+	fullName: string;
 	email: string;
+	createdAt: string;
 }
 
 interface PartnersListResponse {

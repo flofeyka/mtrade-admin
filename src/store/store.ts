@@ -4,7 +4,6 @@ import { notificationsApi } from "./api/notificationsApi";
 import { requestsApi } from "./api/requestsApi";
 import { visitorsApi } from "./api/visitorsApi";
 import { buttonsApi } from "./api/buttonsApi";
-import { paymentsApi } from "./api/paymentsApi";
 
 export const store = configureStore({
 	reducer: {
@@ -13,7 +12,6 @@ export const store = configureStore({
 		[requestsApi.reducerPath]: requestsApi.reducer,
 		[visitorsApi.reducerPath]: visitorsApi.reducer,
 		[buttonsApi.reducerPath]: buttonsApi.reducer,
-		[paymentsApi.reducerPath]: paymentsApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -21,8 +19,7 @@ export const store = configureStore({
 			.concat(notificationsApi.middleware)
 			.concat(requestsApi.middleware)
 			.concat(visitorsApi.middleware)
-			.concat(buttonsApi.middleware)
-			.concat(paymentsApi.middleware),
+			.concat(buttonsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

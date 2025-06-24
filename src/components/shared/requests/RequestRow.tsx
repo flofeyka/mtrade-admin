@@ -64,38 +64,38 @@ export const RequestRow: React.FC<RequestRowProps> = ({ request, onEdit }) => {
 	return (
 		<>
 			<div
-				className="flex border-b border-gray-200 text-sm relative"
+				className="flex border-gray-200 text-sm relative "
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 			>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.id}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{formatDate(request.createdAt)}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.fullName}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.phone}
 				</span>
-				<span className="min-w-[260px] break-all text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] break-all text-center py-4 border-r-2">
 					{request.email}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.telegram || "-"}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.partnerCode || "-"}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{request.source}
 				</span>
-				<span className="min-w-[260px] text-center py-4 border-r-2 border-[#00000033]">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 border-r-2">
 					{getStatusDisplay(request.status)}
 				</span>
-				<span className="min-w-[260px] text-center py-4 relative">
+				<span className="min-w-[260px] border-b-2 border-[#00000033] text-center py-4 relative">
 					{isHovered && (
 						<div className="flex gap-2 justify-center">
 							<button
